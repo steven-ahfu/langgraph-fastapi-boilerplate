@@ -1,7 +1,16 @@
-import dotenv
 import asyncio
+import os
+
+import dotenv
 
 dotenv.load_dotenv()
+
+compat_key = os.getenv("OPENAI_COMPAT_API_KEY")
+if compat_key:
+    os.environ["OPENAI_API_KEY"] = compat_key
+
+base_url = os.getenv("OPENAI_COMPAT_BASE_URL", "https://api.openai.com/v1")
+os.environ["OPENAI_BASE_URL"] = base_url
 
 from langsmith import Client as LS_Client
 from langsmith.evaluation import aevaluate
